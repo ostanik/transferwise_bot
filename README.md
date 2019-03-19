@@ -1,2 +1,2 @@
 # transferwise_bot
-telegram bot to warn me the transfer rate in Transferwise
+Telegram bot to warn me the transfer rate in Transferwise
