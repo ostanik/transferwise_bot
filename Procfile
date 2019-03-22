@@ -1,0 +1,1 @@
+worker: python transferwisebot/tw_checker.py
