@@ -3,33 +3,33 @@
 import requests
 import os
 
-def rateCompare(actual_rate, ideal_rate):
+def rate_compare(actual_rate, ideal_rate):
     return actual_rate > ideal_rate
 
-def fetchChatId():
+def fetch_chat_id():
     return os.environ['MASTER_CHAT']
 
-def fetchIdealRate():
+def fetch_ideal_rate():
     return 0.23345
 
-def sendMessageTo(chat_id):
+def send_message_to(chat_id):
     telegramKey = os.environ['BOT_KEY']
     url = "https://api.telegram.org/bot%s/sendMessage" % (telegramKey)
     data = {"chat_id": chat_id, "text": "The BRL => EUR rate is really good, maybe you should transfer some money today :)"}
     requests.post(url, json=data)
 
-def fetchTransferwiseRate():
+def fetch_tw_rate():
     url = "https://transferwise.com/gateway/v2/quotes/"
     data = {"sourceAmount":1000,"sourceCurrency":"BRL","targetCurrency":"EUR","preferredPayIn":"BANK_TRANSFER","guaranteedTargetAmount":False}
     return requests.post(url, json=data).json()['rate']
 
-def rateCompareBot():
-    ideal_rate = fetchIdealRate()
-    chat_id = fetchChatId()
-    actual_rate = fetchTransferwiseRate()
+def rate_compare_bot():
+    ideal_rate = fetch_ideal_rate()
+    chat_id = fetch_chat_id()
+    actual_rate = fetch_tw_rate()
 
-    if rateCompare(actual_rate, ideal_rate):
-        sendMessageTo(chat_id)
+    if rate_compare(actual_rate, ideal_rate):
+        send_message_to(chat_id)
 
 
-rateCompareBot()
+rate_compare_bot()
