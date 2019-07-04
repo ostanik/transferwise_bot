@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: latin-1 -*-
 import requests
+import locale
 import os
+
 
 def rate_compare(actual_rate, ideal_rate):
     return actual_rate > ideal_rate
@@ -18,7 +20,7 @@ def send_message_to(chat_id, savings):
 
     spacer = "\n---------------------------------------------------\n"
     header = "**The BRL => EUR rate is really good**\n\n"
-    body = "You can earn more €%d since your last transfer" % (savings)
+    body = "You can earn more "+ savings + " since your last transfer"
     message = spacer+header+body+spacer
 
     data = {"chat_id": chat_id, "text": message}
@@ -31,9 +33,11 @@ def fetch_tw_object():
 
 def savings_from_last_transfer(tw_object):
     value = tw_object['paymentOptions'][1]['targetAmount']
-    return value - 1138.07
+    diff = float(value) - 1138.07
+    return locale.currency(diff)
 
 def rate_compare_bot():
+    locale.setlocale(locale.LC_ALL, 'pt_PT.UTF-8')
     ideal_rate = fetch_ideal_rate()
     chat_id = fetch_chat_id()
     tw_object = fetch_tw_object()
