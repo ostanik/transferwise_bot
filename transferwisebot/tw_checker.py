@@ -18,8 +18,8 @@ def send_message_to(chat_id, savings):
     telegramKey = os.environ['BOT_KEY']
     url = "https://api.telegram.org/bot%s/sendMessage" % (telegramKey)
 
-    spacer = "\n---------------------------------------------------\n"
-    header = "**The BRL => EUR rate is really good**\n\n"
+    spacer = "\n------\n"
+    header = "The BRL => EUR rate is really good\n\n"
     body = "You can earn more "+ savings + " since your last transfer"
     message = spacer+header+body+spacer
 
